@@ -1,16 +1,16 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(homework_3 LANGUAGES CXX)
+project(homework_3)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 
 option(WITH_GTEST "Whether to build GTest test" OFF)
 
 
 add_executable(homework_3 main.cpp)
 
-set_target_properties( homework_3 PROPERTIES
-    CXX_STANDARD 14
-    CXX_STANDARD_REQUIRED ON
-)
 
 target_include_directories(homework_3
     PRIVATE "${CMAKE_BINARY_DIR}"
