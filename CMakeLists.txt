@@ -5,10 +5,6 @@ project(homework_3)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
-option(WITH_GTEST "Whether to build GTest test" OFF)
-
-
 add_executable(homework_3 main.cpp)
 
 
@@ -17,50 +13,31 @@ target_include_directories(homework_3
 )
 
 
-if(WITH_GTEST)
-    find_package(GTest REQUIRED)
-    add_executable(test test.cpp)
-
-    set_target_properties(test PROPERTIES
-        CXX_STANDARD 14
-        CXX_STANDARD_REQUIRED ON
-    )
-
-    target_link_libraries(test
-        GTest::gtest
-        GTest::gtest_main
-        homework_3
-    )
-endif()
 
 if (MSVC)
     
     target_compile_options(homework_3 PRIVATE
         /W4
     )
-    if(WITH_GTEST)
-        target_compile_options(test PRIVATE
-            /W4
-        )
-    endif()
+
 else ()
     target_compile_options(homework_3 PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
-    if(WITH_GTEST)
-        target_compile_options(test PRIVATE
-            -Wall -Wextra -pedantic -Werror
-        )
-    endif()
+
 endif()
 
 install(TARGETS homework_3 RUNTIME DESTINATION bin)
 
+set(CPACK_GENERATOR "DEB")
+set(CPACK_PACKAGE_NAME "homework_3")
+set(CPACK_PACKAGE_VERSION_MAJOR 0)
+set(CPACK_PACKAGE_VERSION_MINOR 1)
+set(CPACK_PACKAGE_VERSION_PATCH ${PATCH_VERSION})
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Savchenko")  
+
 include(CPack)
 
-if(WITH_GTEST)
-    enable_testing()
-    add_test(NAME test COMMAND test)
-endif()
+
 
 
